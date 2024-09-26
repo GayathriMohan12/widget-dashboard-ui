@@ -1,0 +1,31 @@
+/* src/components/Widget.css */
+.widget {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.widget h4 {
+  margin-bottom: 20px;
+}
+
+.delete-button {
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+.pie-chart {
+  margin: 0 auto;
+}

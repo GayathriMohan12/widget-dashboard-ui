@@ -1,0 +1,104 @@
+/* Sidebar general styles */
+.sidebar {
+  width: 250px;
+  height: calc(100vh - 60px);
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.category-form, .widget-form {
+  margin-bottom: 20px;
+}
+
+.category-form h3, .widget-form h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.input-field {
+  width: 95%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  
+}
+
+.add-btn {
+  width: 100%;
+  padding: 8px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #0056b3;
+}
+
+.categories-list {
+  margin-top: 20px;
+}
+
+.category-item {
+  padding: 10px;
+  background-color: #444;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-item span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.category-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.add-widget-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.add-widget-btn:hover {
+  background-color: #218838;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}

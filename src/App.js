@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+// src/App.js
+import React, { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import Dashboard from './components/Dashboard';
+import SearchWidget from './components/SearchWidget';
+import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
 
 function App() {
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      {/* Header with logo (dashboard name) and search bar */}
+      <header className="header">
+        <div className="hamburger-menu" onClick={toggleSidebar}>
+          &#9776; {/* Hamburger icon */}
+        </div>
+        <div className="dashboard-logo">
+          Dashboard {/* Dashboard name/logo */}
+        </div>
+        <div className="search-container">
+          <SearchWidget /> {/* Search bar in the center */}
+        </div>
       </header>
+
+      <div className="layout">
+        {/* Sidebar */}
+        <Sidebar isOpen={isSidebarOpen} />
+
+        {/* Main Content */}
+        <div className={`main-content ${isSidebarOpen ? 'content-shifted' : ''}`}>
+          <ErrorBoundary>
+            <Dashboard />
+            {/* <UserInputChart /> Add UserInputChart component here */}
+          </ErrorBoundary>
+        </div>
+      </div>
     </div>
   );
 }

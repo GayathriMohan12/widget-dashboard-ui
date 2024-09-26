@@ -1,38 +1,93 @@
-.App {
-  text-align: center;
+/* General App layout */
+.layout {
+  display: flex;
+  height: calc(100vh - 60px); /* Adjust height to accommodate the header */
+  position: relative;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Header styling */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  background-color: #282c34;
+  color: white;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1001; /* Ensures header is above the sidebar */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.hamburger-menu {
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 1002;
+  margin-right: 20px;
+}
+
+.dashboard-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.search-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-container input {
+  width: 100%;
+  max-width: 350px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  transition: max-width 0.3s ease; /* Smooth transition for responsiveness */
+}
+
+@media screen and (min-width: 1600px) {
+  .search-container input {
+    max-width: 500px; /* Increase width on large screens */
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Sidebar positioning and transitions */
+.sidebar {
+  width: 250px;
+  height: calc(100vh - 60px); /* Adjust height to account for header */
+  background-color: #333;
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 60px; /* Position sidebar below the header */
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+/* When sidebar is closed */
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+/* When sidebar is open */
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* Main content */
+.main-content {
+  flex-grow: 1;
+  margin-left: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Shift content to the right when sidebar is open */
+.content-shifted {
+  margin-left: 250px; /* Sidebar width */
 }
