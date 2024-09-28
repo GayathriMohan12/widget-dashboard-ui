@@ -26,7 +26,7 @@ const Sidebar = ({ isOpen }) => {
         widget: {
           id: Date.now(),
           name: widgetData.name,
-          data: [widgetData.bluetoothQty, widgetData.wiredQty],
+          categories: widgetData.categories, // Use the categories structure
         },
       }));
       setSelectedCategoryId(null);

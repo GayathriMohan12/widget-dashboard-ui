@@ -4,45 +4,61 @@ import './WidgetPopup.css';
 
 const WidgetPopup = ({ onClose, onAdd }) => {
   const [widgetName, setWidgetName] = useState('');
-  const [bluetoothQty, setBluetoothQty] = useState(0);
-  const [wiredQty, setWiredQty] = useState(0);
+  const [categories, setCategories] = useState([
+    { name: '', qty: '' },
+    { name: '', qty: '' },
+  ]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = { name: widgetName, bluetoothQty, wiredQty };
-    onAdd(data);
-    onClose();
+  const handleCategoryChange = (index, field, value) => {
+    const newCategories = [...categories];
+    newCategories[index][field] = value;
+    setCategories(newCategories);
+  };
+
+  const handleAddWidget = () => {
+    // Prepare the data to be sent to the Sidebar
+    const widgetData = {
+      name: widgetName,
+      categories: categories.map(cat => ({ name: cat.name, qty: Number(cat.qty) })),
+    };
+    onAdd(widgetData);
+    setWidgetName('');
+    setCategories([{ name: '', qty: '' }, { name: '', qty: '' }]); // Reset the categories
   };
 
   return (
-    <div className="popup">
-      <div className="popup-content">
-        <h2>Add Widget</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Widget Name"
-            value={widgetName}
-            onChange={(e) => setWidgetName(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Bluetooth Headphones"
-            value={bluetoothQty}
-            onChange={(e) => setBluetoothQty(Number(e.target.value))}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Wired Headphones"
-            value={wiredQty}
-            onChange={(e) => setWiredQty(Number(e.target.value))}
-            required
-          />
-          <button type="submit">Add</button>
-          <button type="button" onClick={onClose}>Cancel</button>
-        </form>
+    <div className="popup-overlay">
+      <div className="popup">
+        <h2 class = "h2-text-header">Add Widget</h2>
+        <input
+          type="text"
+          placeholder="Widget Name"
+          value={widgetName}
+          onChange={(e) => setWidgetName(e.target.value)}
+        />
+        
+        {categories.map((category, index) => (
+          <div key={index} className="category-input">
+            <input
+              type="text"
+              placeholder="Category Name"
+              value={category.name}
+              onChange={(e) => handleCategoryChange(index, 'name', e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Quantity"
+              value={category.qty}
+              onChange={(e) => handleCategoryChange(index, 'qty', e.target.value)}
+            />
+          </div>
+        ))}
+
+        <div class = "add-widget-control">
+        <button class = "add-widget-btn-2" onClick={handleAddWidget}>Add Widget</button>
+        <button  class = "delete-btn-2" onClick={onClose}>Cancel</button>
+        </div>
+        
       </div>
     </div>
   );

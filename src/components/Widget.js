@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { removeWidget } from '../store';
 import './Widget.css';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const COLORS = ['#0088FE', '#00C49F'];
 
 const Widget = ({ categoryId, widget }) => {
   const dispatch = useDispatch();
@@ -14,13 +14,19 @@ const Widget = ({ categoryId, widget }) => {
     dispatch(removeWidget({ categoryId, widgetId: widget.id }));
   };
 
+  // Create pieData based on the widget categories received
+  const pieData = widget.categories.map((category, index) => ({
+    name: category.name,
+    value: category.qty,
+  }));
+
   return (
     <div className="widget">
       <h4>{widget.name}</h4>
 
       <PieChart width={200} height={200}>
         <Pie
-          data={widget.data.map((value, index) => ({ name: `Segment ${index}`, value }))}
+          data={pieData}
           cx={100}
           cy={100}
           innerRadius={50}
@@ -29,11 +35,20 @@ const Widget = ({ categoryId, widget }) => {
           paddingAngle={5}
           dataKey="value"
         >
-          {widget.data.map((entry, index) => (
+          {pieData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
       </PieChart>
+
+      {/* Display categories beside the chart */}
+      <div className="categories-display">
+        {pieData.map((entry, index) => (
+          <div key={index} style={{ color: COLORS[index % COLORS.length] }}>
+            {entry.name}: {entry.value}
+          </div>
+        ))}
+      </div>
 
       <button onClick={handleDeleteWidget} className="delete-button">
         Delete
