@@ -59,6 +59,12 @@
   }
 }
 
+@media (min-width: 200px) {
+  .search-container input{
+    width: 100px;
+  }
+}
+
 @media (min-width: 700px) {
   .search-container input{
     width: 500px;
