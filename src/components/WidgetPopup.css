@@ -29,8 +29,8 @@
     padding: 40px;
     border-radius: 10px;
     padding-bottom: 70px;
-
-
+    max-height: 500px;
+    overflow-y: auto;
   }
 
 
