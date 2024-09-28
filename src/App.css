@@ -11,8 +11,8 @@
   align-items: center;
   justify-content: space-between;
   height: 60px;
-  background-color: #282c34;
-  color: white;
+  background-color: white;
+  color: #282c34;
   padding: 0 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative;
@@ -36,6 +36,7 @@
   flex-grow: 1;
   display: flex;
   justify-content: center;
+  margin-left: 40px;
 }
 
 .search-container input {
@@ -90,4 +91,5 @@
 /* Shift content to the right when sidebar is open */
 .content-shifted {
   margin-left: 250px; /* Sidebar width */
+  background-color: aliceblue;
 }
