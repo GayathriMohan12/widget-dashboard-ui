@@ -45,7 +45,7 @@
 .add-btn {
   width: 100%;
   padding: 8px;
-  background-color: #007bff;
+  background-color: rgba(14, 14, 14, 0.88);
   border: none;
   border-radius: 5px;
   color: white;
@@ -62,14 +62,14 @@
 
 .category-item {
   padding: 10px;
-  background-color: rgb(221, 229, 236);
+  background-color: aliceblue;  
   border-radius: 5px;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 4px rgba(0, 0, 0, 0.1);
 }
 
 

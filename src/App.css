@@ -19,6 +19,10 @@
   z-index: 1001; /* Ensures header is above the sidebar */
 }
 
+
+
+
+
 .hamburger-menu {
   font-size: 30px;
   cursor: pointer;
@@ -46,9 +50,22 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   transition: max-width 0.3s ease; /* Smooth transition for responsiveness */
+  background-color: whitesmoke;
 }
 
-@media screen and (min-width: 1600px) {
+@media (min-width: 400px) {
+  .search-container input{
+    width: 150px;
+  }
+}
+
+@media (min-width: 700px) {
+  .search-container input{
+    width: 500px;
+  }
+}
+
+@media screen and (min-width: 1100px) {
   .search-container input {
     max-width: 500px; /* Increase width on large screens */
   }
@@ -86,6 +103,7 @@
   overflow-y: auto;
   transition: margin-left 0.3s ease;
   padding: 20px;
+  background-color: aliceblue;
 }
 
 /* Shift content to the right when sidebar is open */
