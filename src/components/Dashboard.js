@@ -1,16 +1,23 @@
-// src/components/Dashboard.js
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Widget from './Widget';
 import './Dashboard.css'; // Add styles for Dashboard layout
 
-const Dashboard = () => {
+const Dashboard = ({ searchQuery }) => {
   const categories = useSelector(state => state.categories || []); // Get categories from Redux store
+
+  // Filter categories and widgets based on searchQuery
+  const filteredCategories = categories.map(category => {
+    const filteredWidgets = category.widgets.filter(widget =>
+      widget.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    return { ...category, widgets: filteredWidgets }; // Return new filtered category
+  });
 
   return (
     <div className="dashboard">
-      {categories.length > 0 ? (
-        categories.map(category => (
+      {filteredCategories.length > 0 ? (
+        filteredCategories.map(category => (
           <div key={category.id} className="category">
             <h3>{category.name}</h3>
             <div className="widgets">
@@ -19,7 +26,7 @@ const Dashboard = () => {
                   <Widget key={widget.id} categoryId={category.id} widget={widget} />
                 ))
               ) : (
-                <p>No widgets available in this category</p>
+                <p>No widgets found in this category.</p>
               )}
             </div>
           </div>

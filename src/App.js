@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -8,6 +7,7 @@ import './App.css';
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [searchQuery, setSearchQuery] = useState(''); // State for search input
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -24,7 +24,8 @@ function App() {
           Dashboard {/* Dashboard name/logo */}
         </div>
         <div className="search-container">
-          <SearchWidget /> {/* Search bar in the center */}
+          {/* Pass search state to SearchWidget */}
+          <SearchWidget query={searchQuery} setQuery={setSearchQuery} /> 
         </div>
       </header>
 
@@ -35,8 +36,8 @@ function App() {
         {/* Main Content */}
         <div className={`main-content ${isSidebarOpen ? 'content-shifted' : ''}`}>
           <ErrorBoundary>
-            <Dashboard />
-            {/* <UserInputChart /> Add UserInputChart component here */}
+            {/* Pass searchQuery to the Dashboard */}
+            <Dashboard searchQuery={searchQuery} />
           </ErrorBoundary>
         </div>
       </div>

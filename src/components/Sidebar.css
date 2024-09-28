@@ -15,6 +15,7 @@
 
 .sidebar.closed {
   transform: translateX(-100%);
+  background-color: white;
 }
 
 .sidebar.open {
