@@ -2,10 +2,9 @@
 import React from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import { useDispatch } from 'react-redux';
-import { removeWidget } from '../store'; // Import removeWidget action
-import './Widget.css'; // Import any necessary styles
+import { removeWidget } from '../store';
+import './Widget.css';
 
-// Define some colors for the pie chart segments
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const Widget = ({ categoryId, widget }) => {
@@ -19,7 +18,6 @@ const Widget = ({ categoryId, widget }) => {
     <div className="widget">
       <h4>{widget.name}</h4>
 
-      {/* Donut Pie Chart */}
       <PieChart width={200} height={200}>
         <Pie
           data={widget.data.map((value, index) => ({ name: `Segment ${index}`, value }))}

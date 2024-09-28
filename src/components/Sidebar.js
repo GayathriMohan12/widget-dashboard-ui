@@ -2,34 +2,35 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCategory, addWidget, deleteCategory } from '../store';
+import WidgetPopup from './WidgetPopup';
 import './Sidebar.css';
 
 const Sidebar = ({ isOpen }) => {
   const [categoryName, setCategoryName] = useState('');
-  const [widgetName, setWidgetName] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const categories = useSelector((state) => state.categories || []);
   const dispatch = useDispatch();
 
   const handleAddCategory = () => {
     if (categoryName.trim()) {
-      dispatch(
-        addCategory({
-          category: { id: Date.now(), name: categoryName, widgets: [] },
-        })
-      );
+      dispatch(addCategory({ category: { id: Date.now(), name: categoryName, widgets: [] } }));
       setCategoryName('');
     }
   };
 
-  const handleAddWidget = (categoryId) => {
-    if (widgetName.trim()) {
-      dispatch(
-        addWidget({
-          categoryId,
-          widget: { id: Date.now(), name: widgetName, data: [10, 20, 30] }, // Example pie chart data
-        })
-      );
-      setWidgetName('');
+  const handleAddWidget = (widgetData) => {
+    if (selectedCategoryId) {
+      dispatch(addWidget({
+        categoryId: selectedCategoryId,
+        widget: {
+          id: Date.now(),
+          name: widgetData.name,
+          data: [widgetData.bluetoothQty, widgetData.wiredQty],
+        },
+      }));
+      setSelectedCategoryId(null);
+      setShowPopup(false);
     }
   };
 
@@ -52,16 +53,6 @@ const Sidebar = ({ isOpen }) => {
         </button>
       </div>
 
-      <div className="widget-form">
-        <h3>Add Widget</h3>
-        <input
-          value={widgetName}
-          onChange={(e) => setWidgetName(e.target.value)}
-          placeholder="Widget Name"
-          className="input-field"
-        />
-      </div>
-
       {categories.length > 0 ? (
         <div className="categories-list">
           {categories.map((category) => (
@@ -76,7 +67,10 @@ const Sidebar = ({ isOpen }) => {
                 </button>
                 <button
                   className="action-btn add-widget-btn"
-                  onClick={() => handleAddWidget(category.id)}
+                  onClick={() => {
+                    setSelectedCategoryId(category.id);
+                    setShowPopup(true);
+                  }}
                 >
                   Add Widget
                 </button>
@@ -86,6 +80,10 @@ const Sidebar = ({ isOpen }) => {
         </div>
       ) : (
         <p>No categories available. Please add a category first.</p>
+      )}
+
+      {showPopup && (
+        <WidgetPopup onClose={() => setShowPopup(false)} onAdd={handleAddWidget} />
       )}
     </div>
   );
