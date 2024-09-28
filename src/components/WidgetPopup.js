@@ -6,37 +6,48 @@ const WidgetPopup = ({ onClose, onAdd }) => {
   const [widgetName, setWidgetName] = useState('');
   const [categories, setCategories] = useState([
     { name: '', qty: '' },
-    { name: '', qty: '' },
   ]);
 
+  // Handle category name and quantity changes
   const handleCategoryChange = (index, field, value) => {
     const newCategories = [...categories];
     newCategories[index][field] = value;
     setCategories(newCategories);
   };
 
+  // Add a new category input
+  const handleAddCategory = () => {
+    setCategories([...categories, { name: '', qty: '' }]);
+  };
+
+  // Remove an existing category input
+  const handleRemoveCategory = (index) => {
+    const newCategories = categories.filter((_, idx) => idx !== index);
+    setCategories(newCategories);
+  };
+
+  // Handle adding the widget
   const handleAddWidget = () => {
-    // Prepare the data to be sent to the Sidebar
     const widgetData = {
       name: widgetName,
       categories: categories.map(cat => ({ name: cat.name, qty: Number(cat.qty) })),
     };
     onAdd(widgetData);
     setWidgetName('');
-    setCategories([{ name: '', qty: '' }, { name: '', qty: '' }]); // Reset the categories
+    setCategories([{ name: '', qty: '' }]); // Reset the form
   };
 
   return (
     <div className="popup-overlay">
       <div className="popup">
-        <h2 class = "h2-text-header">Add Widget</h2>
+        <h2>Add Widget</h2>
         <input
           type="text"
           placeholder="Widget Name"
           value={widgetName}
           onChange={(e) => setWidgetName(e.target.value)}
         />
-        
+
         {categories.map((category, index) => (
           <div key={index} className="category-input">
             <input
@@ -51,6 +62,17 @@ const WidgetPopup = ({ onClose, onAdd }) => {
               value={category.qty}
               onChange={(e) => handleCategoryChange(index, 'qty', e.target.value)}
             />
+            <button
+              type="button"
+              className="remove-btn"
+              onClick={() => handleRemoveCategory(index)}
+              disabled={categories.length === 1} // Disable removing if there's only one category
+            >
+              -
+            </button>
+            <button type="button" className="add-btn-2" onClick={handleAddCategory}>
+              +
+            </button>
           </div>
         ))}
 
