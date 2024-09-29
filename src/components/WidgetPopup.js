@@ -1,12 +1,14 @@
-// src/components/WidgetPopup.js
 import React, { useState } from 'react';
 import './WidgetPopup.css';
 
 const WidgetPopup = ({ onClose, onAdd }) => {
   const [widgetName, setWidgetName] = useState('');
-  const [categories, setCategories] = useState([
-    { name: '', qty: '' },
-  ]);
+  const [categories, setCategories] = useState([{ name: '', qty: '' }]);
+
+  // Helper function to capitalize the first letter of each word
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  };
 
   // Handle category name and quantity changes
   const handleCategoryChange = (index, field, value) => {
@@ -29,8 +31,11 @@ const WidgetPopup = ({ onClose, onAdd }) => {
   // Handle adding the widget
   const handleAddWidget = () => {
     const widgetData = {
-      name: widgetName,
-      categories: categories.map(cat => ({ name: cat.name, qty: Number(cat.qty) })),
+      name: capitalizeWords(widgetName),
+      categories: categories.map((cat) => ({
+        name: capitalizeWords(cat.name),
+        qty: Number(cat.qty),
+      })),
     };
     onAdd(widgetData);
     setWidgetName('');
@@ -48,39 +53,40 @@ const WidgetPopup = ({ onClose, onAdd }) => {
           onChange={(e) => setWidgetName(e.target.value)}
         />
 
-        {categories.map((category, index) => (
-          <div key={index} className="category-input">
-            <input
-              type="text"
-              placeholder="Category Name"
-              value={category.name}
-              onChange={(e) => handleCategoryChange(index, 'name', e.target.value)}
-            />
-            <input
-              type="number"
-              placeholder="Quantity"
-              value={category.qty}
-              onChange={(e) => handleCategoryChange(index, 'qty', e.target.value)}
-            />
-            <button
-              type="button"
-              className="remove-btn"
-              onClick={() => handleRemoveCategory(index)}
-              disabled={categories.length === 1} // Disable removing if there's only one category
-            >
-              -
-            </button>
-            <button type="button" className="add-btn-2" onClick={handleAddCategory}>
-              +
-            </button>
-          </div>
-        ))}
-
-        <div class = "add-widget-control">
-        <button class = "add-widget-btn-2" onClick={handleAddWidget}>Add Widget</button>
-        <button  class = "delete-btn-2" onClick={onClose}>Cancel</button>
+        <div className="category-list">
+          {categories.map((category, index) => (
+            <div key={index} className="category-input">
+              <input
+                type="text"
+                placeholder="Category Name"
+                value={category.name}
+                onChange={(e) => handleCategoryChange(index, 'name', e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Quantity"
+                value={category.qty}
+                onChange={(e) => handleCategoryChange(index, 'qty', e.target.value)}
+              />
+              <button
+                type="button"
+                className="remove-btn"
+                onClick={() => handleRemoveCategory(index)}
+                disabled={categories.length === 1}
+              >
+                -
+              </button>
+              <button type="button" className="add-btn-2" onClick={handleAddCategory}>
+                +
+              </button>
+            </div>
+          ))}
         </div>
-        
+
+        <div className="add-widget-control">
+          <button className="add-widget-btn-2" onClick={handleAddWidget}>Add Widget</button>
+          <button className="delete-btn-2" onClick={onClose}>Cancel</button>
+        </div>
       </div>
     </div>
   );

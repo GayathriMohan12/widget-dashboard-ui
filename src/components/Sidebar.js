@@ -1,4 +1,3 @@
-// src/components/Sidebar.js
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCategory, addWidget, deleteCategory } from '../store';
@@ -11,6 +10,11 @@ const Sidebar = ({ isOpen }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const categories = useSelector((state) => state.categories || []);
   const dispatch = useDispatch();
+
+  // Helper function to capitalize the first letter of each word
+  const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  };
 
   const handleAddCategory = () => {
     if (categoryName.trim()) {
@@ -57,7 +61,8 @@ const Sidebar = ({ isOpen }) => {
         <div className="categories-list">
           {categories.map((category) => (
             <div key={category.id} className="category-item">
-              <span>{category.name}</span>
+              {/* Capitalize each word in the category name */}
+              <span>{capitalizeWords(category.name)}</span>
               <div className="category-controls">
                 <button
                   className="action-btn delete-btn"
