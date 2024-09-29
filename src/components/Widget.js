@@ -21,7 +21,15 @@ const Widget = ({ categoryId, widget }) => {
 
   return (
     <div className="widget">
+
+      <div class ="Widget-header">
       <h4>{widget.name}</h4>
+
+      <button onClick={handleDeleteWidget} className="delete-button">
+      &#10006;
+      </button>
+      </div>
+      
 
       <div className="widget-content">
         <div className="pie-chart-container">
@@ -55,9 +63,7 @@ const Widget = ({ categoryId, widget }) => {
         </div>
       </div>
 
-      <button onClick={handleDeleteWidget} className="delete-button">
-        Delete
-      </button>
+      
     </div>
   );
 };
